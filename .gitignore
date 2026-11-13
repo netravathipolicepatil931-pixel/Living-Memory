@@ -1,0 +1,37 @@
+# Dependencies & build outputs
+node_modules/
+build/
+dist/
+coverage/
+.DS_Store
+*.log
+
+# Environment & secret files (root and backend)
+.env
+.env.local
+.env.*.local
+.env*
+!.env.example
+backend/.env
+backend/.env.*
+!backend/.env.example
+
+# Secret keys, certificates, and service account files
+*.pem
+*.key
+*.p12
+*credentials*.json
+*client_secret*.json
+*service_account*.json
+
+# Python virtual environments, caches, and local SQLite data
+backend/.venv/
+.venv/
+venv/
+**/__pycache__/
+*.py[cod]
+.pytest_cache/
+backend/data/
+*.db
+*.sqlite
+*.sqlite3

@@ -1,0 +1,1417 @@
+# MASTER BUILD PROMPT — LIVING MEMORY
+## Complete Premium Frontend UI/UX Application
+
+You are a senior product designer, UX architect, frontend engineer and design systems expert.
+
+Your task is to BUILD a complete, polished, production-quality frontend application called **LIVING MEMORY**.
+
+Do not ask me questions.
+Do not ask me to choose screens.
+Do not give me only a plan, wireframe, landing page or design explanation.
+Do not stop after generating a few screens.
+
+**BUILD THE ENTIRE FRONTEND APPLICATION DIRECTLY.**
+
+Make sensible product and design decisions independently. Implement all screens, navigation, interactions, responsive layouts, reusable components and realistic demo data.
+
+If an integration or backend is not configured, create a clearly labeled interactive demo state rather than pretending that real data is connected.
+
+---
+
+# 1. PRODUCT IDENTITY
+
+Product name: LIVING MEMORY
+
+Tagline: Your life, continuously understood.
+
+Product description:
+
+LIVING MEMORY is an AI-powered personal context intelligence platform that connects information from WhatsApp groups, Gmail, Google Calendar, documents, PDFs, images and conversations.
+
+It does not simply summarize information.
+
+It:
+- Remembers important information.
+- Connects related information across different sources.
+- Understands people, projects, decisions and responsibilities.
+- Tracks how information changes over time.
+- Detects contradictions and missing information.
+- Understands how one change affects other activities.
+- Recovers forgotten context.
+- Identifies what needs attention.
+- Helps users anticipate what may matter next.
+
+Core product philosophy:
+
+COLLECT → REMEMBER → CONNECT → UNDERSTAND → ANTICIPATE.
+
+This must be reflected throughout the UI.
+
+---
+
+# 2. DESIGN SYSTEM — EXTREMELY IMPORTANT
+
+Create a professional, elegant, premium and consistent design system.
+
+The application should look like a combination of:
+- Linear's clean product experience.
+- Notion's organized information architecture.
+- A sophisticated enterprise intelligence platform.
+- A premium editorial dashboard.
+
+Do NOT make it look like:
+- A generic AI-generated dashboard.
+- A colorful gaming application.
+- A cryptocurrency dashboard.
+- A neon cyberpunk interface.
+- A childish productivity application.
+- A template filled with unnecessary gradients.
+
+## Color palette
+
+Use this carefully selected palette:
+
+Primary background: #101827
+Secondary background: #151F30
+Sidebar background: #111B2A
+Card background: #192638
+Elevated card: #202E40
+Primary text: #F5F2EB
+Secondary text: #A9B3C2
+Muted text: #7F8B9C
+Border: #2B394B
+Champagne gold accent: #C6A878
+Soft lavender accent: #A99ACB
+Sage teal accent: #718A91
+Success: #83A991
+Warning: #D2AA70
+Danger: #C77F7F
+
+Use champagne gold sparingly for:
+- Important highlights.
+- Premium active states.
+- Key intelligence indicators.
+- Important memory connections.
+
+Use lavender for AI-related elements.
+
+Use sage teal for verified or connected states.
+
+Use red only for actual conflicts or critical warnings.
+
+Maintain excellent text contrast and accessibility.
+
+## Visual style
+
+- Elegant typography.
+- Generous spacing.
+- Clean visual hierarchy.
+- Subtle borders.
+- Refined shadows.
+- Soft 10–14px card radii.
+- Consistent iconography.
+- Restrained animations.
+- Smooth transitions.
+- Minimal gradients.
+- Professional data visualizations.
+- Clear empty states.
+- Beautiful loading states.
+
+Use a premium typography pairing:
+- Inter or Manrope for general interface.
+- A refined serif font such as DM Serif Display for selected editorial headings, if available.
+
+Avoid oversized text everywhere.
+
+Do not make every card colorful.
+
+The overall appearance should feel calm, intelligent, trustworthy and sophisticated.
+
+Provide both dark mode and light mode, with dark mode as the default.
+
+Light mode should use warm ivory backgrounds, white cards, charcoal text and muted gold accents.
+
+---
+
+# 3. TECH STACK
+
+Use:
+
+- React
+- TypeScript
+- Vite
+- Tailwind CSS
+- React Router
+- Lucide React icons
+- Recharts
+- React Flow for interactive memory graphs
+- Framer Motion for subtle animations
+
+Use reusable components and organized folders.
+
+Keep components modular.
+
+Avoid one giant component.
+
+Create a clean and scalable frontend architecture.
+
+Suggested structure:
+
+src/
+  components/
+    layout/
+    navigation/
+    dashboard/
+    memory/
+    graph/
+    integrations/
+    intelligence/
+    notifications/
+    common/
+    charts/
+  pages/
+  services/
+  hooks/
+  context/
+  data/
+  types/
+  utils/
+  styles/
+
+Create:
+- Global theme system.
+- Reusable buttons.
+- Form controls.
+- Cards.
+- Modal components.
+- Drawers.
+- Tooltips.
+- Tabs.
+- Tables.
+- Search components.
+- Filter components.
+- Notification components.
+- Empty states.
+- Loading skeletons.
+- Confirmation dialogs.
+
+---
+
+# 4. APPLICATION LAYOUT
+
+Create a professional desktop-first SaaS application that is fully responsive.
+
+Desktop layout:
+
+Left sidebar:
+- Fixed or collapsible navigation.
+- Logo and product name.
+- Navigation grouped into logical sections.
+- Connected account status.
+- User profile at the bottom.
+
+Top navigation:
+- Global search.
+- Ask Living Memory shortcut.
+- Notification center.
+- Theme switch.
+- User avatar.
+
+Main content:
+- Responsive.
+- Scrollable.
+- Consistent page headers.
+- Breadcrumbs where useful.
+- Clear page actions.
+- Proper loading and empty states.
+
+Mobile:
+- Collapsible sidebar.
+- Mobile navigation drawer.
+- Responsive cards.
+- Scrollable tables when necessary.
+- Graph interactions suitable for touch.
+- Bottom navigation for essential destinations.
+
+---
+
+# 5. COMPLETE NAVIGATION
+
+Build all the following screens.
+
+## A. HOME AND ACCOUNT
+
+1. Landing Page
+2. Sign In
+3. Sign Up
+4. Onboarding
+5. Source Permissions
+
+## B. PERSONAL INTELLIGENCE
+
+6. Main Dashboard
+7. Daily Briefing
+8. Weekly Life Reflection
+9. Proactive Alerts
+10. Personal Context Profile
+
+## C. MEMORY MANAGEMENT
+
+11. Memory Explorer
+12. Interactive Memory Graph
+13. Memory Timeline
+14. Memory Details
+15. Memory Time Machine
+16. Memory Health Center
+17. Forgotten Context Recovery
+
+## D. SOURCES AND INTEGRATIONS
+
+18. Sources Library
+19. WhatsApp Group Selection
+20. Group Intelligence
+21. Cross-Group Intelligence
+22. Gmail Integration
+23. Google Calendar Integration
+24. Connected Apps
+
+## E. ADVANCED INTELLIGENCE
+
+25. Ask Living Memory
+26. Change and Conflict Center
+27. Impact Radar
+28. What-If Simulator
+29. Decision Intelligence
+30. Relationship Intelligence
+31. Commitment Tracker
+32. Unanswered Question Detector
+33. Source Reliability Center
+34. Life Context Prediction
+35. Knowledge Transfer / Project Handover
+
+## F. SETTINGS
+
+36. Notifications and Preferences
+37. Privacy and Data Controls
+38. Account Settings
+39. Integration Permissions
+40. Help and Support
+
+Build all 40 screens with a consistent design language.
+
+Do not omit screens because they are numerous.
+
+---
+
+# 6. SCREEN DETAILS
+
+## 1. LANDING PAGE
+
+Create an elegant SaaS landing page.
+
+Hero heading:
+
+"Your life, continuously understood."
+
+Subheading:
+
+"Connect your conversations, emails, calendar and documents. LIVING MEMORY remembers what matters, connects what is related and helps you understand what comes next."
+
+Include:
+- Get Started button.
+- Explore Demo button.
+- Premium product preview.
+- Feature overview.
+- How it works.
+- Integrations.
+- Privacy section.
+- Footer.
+
+Show a visual preview of an interconnected memory graph.
+
+Avoid excessive marketing content.
+
+## 2. AUTHENTICATION
+
+Create:
+- Sign in.
+- Create account.
+- Forgot password.
+- Google sign-in UI.
+- Form validation.
+- Password visibility.
+- Loading and error states.
+
+## 3. ONBOARDING
+
+Create a polished onboarding experience.
+
+Collect:
+- User's name.
+- Main use cases.
+- Personal or academic or professional use.
+- Preferred information sources.
+- Important categories.
+- Notification preferences.
+
+Show progress.
+
+Allow skipping optional steps.
+
+## 4. SOURCE PERMISSIONS
+
+Build a source permission center.
+
+Cards for:
+- WhatsApp.
+- Gmail.
+- Google Calendar.
+- PDF documents.
+- Images.
+- Text files.
+
+Each card should show:
+- Source description.
+- Connection status.
+- Permission details.
+- Connect button.
+- Configure button.
+
+Make permissions understandable and user-controlled.
+
+---
+
+# 7. MAIN DASHBOARD
+
+This is the most important screen.
+
+Create an elegant, intelligent dashboard.
+
+Header:
+
+"Good morning, [Name]."
+
+Subtitle:
+
+"Here is what is happening across your information."
+
+Include:
+
+### Intelligence overview
+- Total memories.
+- Connected sources.
+- Upcoming commitments.
+- Important changes.
+- Open questions.
+- Unresolved conflicts.
+
+### Today's priorities
+Show the most important things requiring attention.
+
+### Daily intelligence
+- New important information.
+- Changes detected.
+- Deadlines approaching.
+- People awaiting responses.
+- Missing information.
+
+### Connected sources
+WhatsApp, Gmail, Google Calendar and Documents.
+
+### Memory activity
+A recent activity timeline.
+
+### Cross-source discoveries
+Examples:
+- A project mentioned in WhatsApp and Gmail.
+- A meeting discussed in an email and found in Calendar.
+- A deadline changed in an official announcement.
+
+### Upcoming events
+Calendar-based events.
+
+### Quick actions
+- Ask Living Memory.
+- Import WhatsApp chat.
+- Upload document.
+- Connect Gmail.
+- Connect Calendar.
+- Explore memory graph.
+
+Do not overload the dashboard.
+
+Prioritize information using clear visual hierarchy.
+
+---
+
+# 8. DAILY BRIEFING AND WEEKLY REFLECTION
+
+Daily Briefing:
+
+Create sections:
+- What changed today.
+- Important messages.
+- From Gmail.
+- From Google Calendar.
+- From WhatsApp.
+- Upcoming deadlines.
+- Tasks requiring attention.
+- Important people updates.
+- Cross-source intelligence.
+
+Weekly Reflection:
+
+Include:
+- Important events.
+- Completed commitments.
+- Pending commitments.
+- Decisions made.
+- New relationships or projects.
+- Changes during the week.
+- Upcoming risks.
+- Personal activity summary.
+
+Allow users to navigate between dates and weeks.
+
+---
+
+# 9. PROACTIVE CONTEXT ALERTS
+
+Create an intelligent alerts center.
+
+Alert types:
+- Deadline approaching.
+- Meeting changed.
+- Commitment not fulfilled.
+- Important question unanswered.
+- Conflicting information.
+- Missing document.
+- New important decision.
+- Possible dependency risk.
+
+Each alert should show:
+- What happened.
+- Why it matters.
+- Related sources.
+- Related people.
+- Recommended next step.
+- Mark as reviewed.
+- Dismiss.
+- View evidence.
+
+Avoid presenting predictions as confirmed facts.
+
+---
+
+# 10. PERSONAL CONTEXT PROFILE
+
+Create a profile that evolves from the user's information.
+
+Sections:
+- Goals.
+- Interests.
+- Active projects.
+- Important people.
+- Responsibilities.
+- Preferences.
+- Recurring activities.
+- Frequently discussed topics.
+- User-confirmed facts.
+
+Each profile item should show:
+- Description.
+- Evidence.
+- Confidence.
+- Last updated.
+- Edit.
+- Correct.
+- Remove.
+
+Clearly distinguish confirmed information from AI-inferred information.
+
+---
+
+# 11. MEMORY EXPLORER
+
+Create a powerful searchable memory center.
+
+Features:
+- Global search.
+- Filters.
+- Category selection.
+- Date filtering.
+- Source filtering.
+- People filtering.
+- Project filtering.
+- Priority filtering.
+- Confidence filtering.
+
+Memory categories:
+- Events.
+- Tasks.
+- Decisions.
+- Commitments.
+- Deadlines.
+- Announcements.
+- People.
+- Projects.
+- Relationships.
+- Preferences.
+- Questions.
+- Important conversations.
+
+Use clean memory cards and a detailed list view.
+
+---
+
+# 12. INTERACTIVE MEMORY GRAPH
+
+Build a beautiful interactive graph using React Flow.
+
+Node types:
+- People.
+- Projects.
+- Events.
+- Conversations.
+- Decisions.
+- Commitments.
+- Documents.
+- Emails.
+- Calendar events.
+- WhatsApp groups.
+
+Features:
+- Zoom.
+- Pan.
+- Search nodes.
+- Filter by source.
+- Filter by category.
+- Select nodes.
+- Expand connections.
+- View relationships.
+- Open evidence.
+- Highlight related memories.
+
+Clicking a node should open a details drawer.
+
+Use restrained colors and elegant connections.
+
+The graph must be interactive, not a static illustration.
+
+---
+
+# 13. MEMORY TIMELINE
+
+Create a chronological timeline.
+
+Display:
+- Original information.
+- New information.
+- Changes.
+- Decisions.
+- Events.
+- Deadlines.
+- Commitments.
+
+Distinguish:
+1. Event time: when something actually happened.
+2. Recorded time: when LIVING MEMORY learned about it.
+
+Show memory version history.
+
+Allow filtering by source and date.
+
+---
+
+# 14. MEMORY TIME MACHINE
+
+Create a unique history exploration interface.
+
+Allow users to select a date and see what LIVING MEMORY knew at that time.
+
+Include:
+- Date slider.
+- Previous and next controls.
+- Historical memory state.
+- Changed information.
+- Newly discovered information.
+- Superseded information.
+- Original source evidence.
+
+Example:
+
+November 10:
+Project deadline = November 15.
+
+November 12:
+Project team suggests November 18.
+
+November 13:
+Official announcement updates deadline to November 20.
+
+Show all versions instead of overwriting old information.
+
+Allow users to ask:
+
+"What did I know about this project last week?"
+
+---
+
+# 15. MEMORY HEALTH CENTER
+
+Show:
+- Duplicate memories.
+- Outdated information.
+- Unverified information.
+- Conflicting memories.
+- Missing evidence.
+- Low-confidence memories.
+- Unused or irrelevant memories.
+
+Actions:
+- Review.
+- Merge.
+- Confirm.
+- Correct.
+- Archive.
+- Delete.
+
+Show memory quality statistics.
+
+Never silently delete information.
+
+---
+
+# 16. FORGOTTEN CONTEXT RECOVERY
+
+Create a screen that resurfaces older information when relevant.
+
+Examples:
+- Previous project discussions.
+- Past decisions.
+- Old promises.
+- Previously shared resources.
+- Unfinished tasks.
+
+Display:
+- Why this memory is relevant now.
+- Original date.
+- Related people.
+- Original source.
+- View full context.
+
+---
+
+# 17. WHATSAPP GROUP INTELLIGENCE
+
+Allow users to import WhatsApp chat exports.
+
+Build:
+- Upload interface.
+- Group selection.
+- Selected group count.
+- Group categories.
+- Import progress.
+- Analysis status.
+- Group details.
+
+Categories:
+- College.
+- Announcements.
+- Projects.
+- Friends.
+- Work.
+- Personal.
+- Other.
+
+Automatically organize imported information into:
+- Assignments.
+- Deadlines.
+- Events.
+- Announcements.
+- Decisions.
+- Responsibilities.
+- Important conversations.
+- Questions.
+- Updates.
+- Duplicate messages.
+
+Include a group intelligence dashboard.
+
+Important:
+
+Do not imply that the app can automatically access every private WhatsApp group.
+
+For the MVP, use user-authorized WhatsApp chat exports and uploads.
+
+---
+
+# 18. CROSS-GROUP INTELLIGENCE
+
+Connect information from multiple WhatsApp groups.
+
+Example:
+
+Class group: Assignment deadline November 15.
+
+Project group: Team discusses November 18.
+
+Official announcement: Deadline updated to November 20.
+
+Show:
+- Related conversations.
+- Original information.
+- New information.
+- Latest authoritative information.
+- Source evidence.
+- People involved.
+- What changed.
+
+Clearly explain why the system connected the information.
+
+---
+
+# 19. GMAIL INTEGRATION
+
+Create a complete Gmail connection experience.
+
+Integration card:
+- Connect Gmail.
+- Connection status.
+- Connected account.
+- Last synced.
+- Sync now.
+- Disconnect.
+- Permission management.
+
+Permission controls:
+- Read emails.
+- Select labels.
+- Include starred messages.
+- Exclude spam and trash.
+- Choose date range.
+- Choose information categories to remember.
+
+Gmail intelligence:
+- Important emails.
+- Decisions.
+- Meeting details.
+- Deadlines.
+- Promises.
+- Project updates.
+- Follow-up requests.
+- Unanswered emails.
+- Changes in plans.
+
+Provide:
+- Email list.
+- Email detail preview.
+- Extracted memories.
+- Evidence references.
+- Related conversations.
+- Related Calendar events.
+
+Start with read-only access.
+
+Never send, delete, archive or modify an email without explicit authorization.
+
+---
+
+# 20. GOOGLE CALENDAR INTEGRATION
+
+Create a full Google Calendar connection interface.
+
+Features:
+- Connect account.
+- Connection status.
+- Select calendars.
+- Sync now.
+- Last synced.
+- Disconnect.
+- Permission management.
+
+Calendar intelligence:
+- Upcoming meetings.
+- Deadlines.
+- Schedule changes.
+- Event descriptions.
+- Participants.
+- Related projects.
+- Meeting dependencies.
+- Conflicting schedules.
+
+Create an elegant calendar interface with:
+- Month view.
+- Week view.
+- Agenda view.
+- Event details drawer.
+
+Show links between calendar events, emails, WhatsApp conversations and memories.
+
+Start with read-only access.
+
+Never create, edit or delete calendar events without explicit authorization.
+
+---
+
+# 21. CONNECTED APPS
+
+Build a dedicated integration management center.
+
+Cards for:
+- WhatsApp.
+- Gmail.
+- Google Calendar.
+- Documents.
+- PDFs.
+- Images.
+- Future integrations.
+
+Show:
+- Connected or disconnected.
+- Last synchronization.
+- Permission scope.
+- Data categories.
+- Sync progress.
+- Disconnect.
+- Manage permissions.
+
+Do not pretend that unavailable connectors are functional.
+
+---
+
+# 22. ASK LIVING MEMORY
+
+This should feel like a sophisticated personal intelligence assistant, not a generic chatbot.
+
+Create:
+- Large conversation interface.
+- Conversation history.
+- Suggested questions.
+- Source citations.
+- Related memory cards.
+- People and project references.
+- Evidence drawer.
+- Follow-up questions.
+
+Suggested questions:
+
+"What changed about my project this week?"
+
+"What deadlines are approaching?"
+
+"Who promised to complete the presentation?"
+
+"Which meetings were rescheduled?"
+
+"What did my professor announce?"
+
+"Which emails contain important decisions?"
+
+"Show me unanswered questions from my groups."
+
+"What did I decide about this project last month?"
+
+"Are there any conflicts between my emails and calendar?"
+
+"Find the discussion where we originally decided this."
+
+Answers should include:
+- Clear explanation.
+- Source name.
+- Date.
+- Relevant evidence.
+- Confidence indicator.
+- Related memories.
+
+Do not show fabricated citations.
+
+Use clearly labeled sample data in demo mode.
+
+---
+
+# 23. CHANGE AND CONFLICT CENTER
+
+Create a dedicated conflict intelligence screen.
+
+Detect:
+- Different deadlines.
+- Different meeting times.
+- Conflicting instructions.
+- Changed responsibilities.
+- Outdated announcements.
+- Contradictory decisions.
+
+Show:
+- Conflict title.
+- Conflicting values.
+- Original source.
+- New source.
+- Date and time.
+- Source reliability.
+- Confidence.
+- Suggested resolution.
+
+Actions:
+- Confirm latest information.
+- Mark resolved.
+- Keep both versions.
+- Request clarification.
+
+Never silently overwrite conflicting information.
+
+---
+
+# 24. IMPACT RADAR
+
+Build a visual dependency and impact analysis interface.
+
+Example:
+
+A project deadline changes from November 15 to November 20.
+
+Show affected:
+- Team review.
+- Submission preparation.
+- Meeting schedule.
+- Assigned responsibilities.
+
+Include:
+- Main change.
+- Affected entities.
+- Dependency graph.
+- Severity.
+- Potential consequences.
+- Evidence.
+- Recommended action.
+
+Use a visual impact map.
+
+Distinguish confirmed consequences from possible consequences.
+
+---
+
+# 25. WHAT-IF SIMULATOR
+
+Create a scenario analysis interface.
+
+Example questions:
+- What if my deadline moves by three days?
+- What if the meeting is cancelled?
+- What if one teammate cannot complete their task?
+- What if this decision is changed?
+
+Show:
+- Selected scenario.
+- Affected commitments.
+- Affected events.
+- People involved.
+- Potential consequences.
+- Alternative scenarios.
+
+Label simulated results clearly.
+
+Do not present hypothetical outcomes as facts.
+
+---
+
+# 26. DECISION INTELLIGENCE
+
+Create a decision history interface.
+
+Track:
+- Decision title.
+- Available alternatives.
+- Final choice.
+- Reasoning.
+- People involved.
+- Decision date.
+- Related conversations.
+- Subsequent outcomes.
+- Later changes.
+
+Allow users to compare old and new decisions.
+
+---
+
+# 27. RELATIONSHIP INTELLIGENCE
+
+Create a relationship exploration interface.
+
+Track connections between:
+- People.
+- Projects.
+- Groups.
+- Tasks.
+- Decisions.
+- Events.
+
+Show:
+- People frequently involved in a project.
+- Task responsibilities.
+- Shared decisions.
+- Important collaborations.
+- Relevant communication history.
+
+Do not infer sensitive personal traits or make unsupported judgments about people.
+
+---
+
+# 28. COMMITMENT TRACKER
+
+Automatically identify statements such as:
+- "I'll send it tomorrow."
+- "I will finish this by Friday."
+- "Let's discuss this next week."
+
+Track:
+- Commitment.
+- Person responsible.
+- Due date.
+- Original conversation.
+- Current status.
+- Related project.
+- Follow-up history.
+
+Statuses:
+- Pending.
+- Completed.
+- Overdue.
+- Unconfirmed.
+- Cancelled.
+
+Allow manual corrections.
+
+Do not mark commitments completed without evidence.
+
+---
+
+# 29. UNANSWERED QUESTION DETECTOR
+
+Identify questions that have not received clear answers.
+
+Examples:
+- "When is the final submission?"
+- "Who will prepare the presentation?"
+- "Has the meeting been confirmed?"
+
+Show:
+- Original question.
+- Person who asked.
+- Date.
+- Group or email source.
+- Possible answer if discovered elsewhere.
+- Status.
+
+Statuses:
+- Unanswered.
+- Possibly answered elsewhere.
+- Answer found.
+- Needs confirmation.
+
+---
+
+# 30. SOURCE RELIABILITY CENTER
+
+Create an interface showing source credibility and information verification.
+
+Source types:
+- Official announcements.
+- Direct emails.
+- Calendar events.
+- WhatsApp messages.
+- Forwarded messages.
+- Uploaded documents.
+
+Show:
+- Source type.
+- Verification state.
+- Date.
+- Related memories.
+- Evidence.
+- Authority indicators.
+
+Do not use arbitrary AI-generated numerical reliability scores as established facts.
+
+Explain the basis of any reliability assessment.
+
+---
+
+# 31. LIFE CONTEXT PREDICTION
+
+Create a sophisticated future-context insights screen.
+
+Identify possible upcoming needs from existing information.
+
+Example:
+
+"You have a project review approaching. The latest presentation has not appeared in your connected sources, and a teammate previously agreed to prepare it."
+
+Display:
+- Predicted upcoming situation.
+- Supporting evidence.
+- Related commitments.
+- People involved.
+- Potential risk.
+- Suggested preparation.
+
+Clearly distinguish:
+- Known facts.
+- Observed patterns.
+- AI predictions.
+
+Never imply certainty where there is none.
+
+---
+
+# 32. KNOWLEDGE TRANSFER / PROJECT HANDOVER
+
+Create a beautiful project handover generator.
+
+Allow users to select a project or topic.
+
+Generate a structured handover containing:
+- Project overview.
+- Important people.
+- Current status.
+- Previous decisions.
+- Pending tasks.
+- Deadlines.
+- Responsibilities.
+- Important discussions.
+- Documents.
+- Unresolved questions.
+- Risks.
+- Source references.
+
+Include:
+- Preview.
+- Edit.
+- Export.
+- Copy summary.
+
+---
+
+# 33. SETTINGS AND PRIVACY
+
+Create a complete settings experience.
+
+Sections:
+- Profile.
+- Account.
+- Connected apps.
+- Source permissions.
+- Data retention.
+- Memory controls.
+- Notifications.
+- Appearance.
+- Privacy.
+- Security.
+
+Users should be able to:
+- Disconnect integrations.
+- Review permissions.
+- Delete imported sources.
+- Delete associated memories.
+- Correct memories.
+- Export their data.
+- Control what information is retained.
+- Switch themes.
+
+Make privacy visible and understandable.
+
+---
+
+# 34. INTERACTIONS — DO NOT CREATE STATIC MOCKUPS
+
+All major controls must work.
+
+Implement:
+- Sidebar navigation.
+- Route navigation.
+- Search.
+- Filters.
+- Tabs.
+- Dropdowns.
+- Modals.
+- Drawers.
+- Tooltips.
+- Sorting.
+- Pagination where appropriate.
+- Date selection.
+- Theme switching.
+- Graph interactions.
+- Memory detail navigation.
+- Notification interactions.
+- Import flow simulation.
+- Integration connection state simulation.
+- User preference updates.
+- Form validation.
+- Toast notifications.
+- Loading states.
+- Empty states.
+- Error states.
+
+Use local demo data and local application state initially.
+
+Persist appropriate demo preferences using localStorage.
+
+Do not make buttons that look functional but do nothing.
+
+If a real external operation is unavailable, show an honest demo or configuration-required state.
+
+---
+
+# 35. DEMO DATA
+
+Create realistic, interconnected sample data.
+
+Use a fictional user named Alex.
+
+Example data:
+
+WhatsApp groups:
+- College Announcements.
+- AI Project Team.
+- Class Discussion.
+
+Gmail:
+- Project review email.
+- Assignment update.
+- Meeting follow-up.
+- Important faculty announcement.
+
+Google Calendar:
+- Project review.
+- Assignment deadline.
+- Team meeting.
+- Presentation session.
+
+Projects:
+- AI Assistant Project.
+- Smart Campus Project.
+
+People:
+- Alex.
+- Sarah.
+- Rahul.
+- Professor Meera.
+
+Create meaningful relationships between these entities.
+
+Create a sample timeline where an assignment deadline changes three times.
+
+Use consistent dates and details throughout the application.
+
+All dashboard metrics, charts, graph nodes, notifications and memory records should be based on the same demo dataset.
+
+Label sample data as Demo Data.
+
+Never display fake live integration status.
+
+---
+
+# 36. COMPONENT QUALITY
+
+Build polished reusable components for:
+
+- Sidebar.
+- Top navigation.
+- Page headers.
+- Stat cards.
+- Memory cards.
+- Source cards.
+- Integration cards.
+- Timeline events.
+- Graph nodes.
+- Evidence panels.
+- Intelligence alerts.
+- Conflict cards.
+- Commitment rows.
+- Person profiles.
+- Project cards.
+- Search bars.
+- Filter panels.
+- Empty states.
+- Skeleton loaders.
+- Confirmation modals.
+- Notification toasts.
+
+Maintain consistent spacing, typography, colors and interactions.
+
+---
+
+# 37. RESPONSIVENESS AND ACCESSIBILITY
+
+Support:
+- Desktop.
+- Laptop.
+- Tablet.
+- Mobile.
+
+Ensure:
+- Keyboard navigation.
+- Accessible labels.
+- Clear focus indicators.
+- Sufficient contrast.
+- Readable font sizes.
+- Responsive charts.
+- Touch-friendly controls.
+
+Do not sacrifice usability for visual decoration.
+
+---
+
+# 38. DEVELOPMENT RULES
+
+1. Build the actual React application, not an image of an application.
+2. Generate every required screen.
+3. Use React Router for navigation.
+4. Use reusable components.
+5. Use realistic interconnected demo data.
+6. Make all important controls interactive.
+7. Keep code organized and maintainable.
+8. Avoid unnecessary dependencies.
+9. Do not expose API keys.
+10. Do not implement fake OAuth.
+11. Clearly separate frontend demo services from future real backend services.
+12. Keep the existing project structure if modifying an existing application.
+13. Do not delete working features.
+14. Do not replace the complete project with a landing page.
+15. Fix TypeScript errors.
+16. Fix missing imports.
+17. Fix broken routes.
+18. Ensure the application starts successfully.
+19. Ensure all pages share the same visual system.
+20. Do not stop until the complete frontend has been implemented.
+
+---
+
+# 39. FINAL QUALITY CHECK
+
+Before finishing, verify:
+
+- All 40 screens exist.
+- All navigation routes work.
+- Dashboard has realistic data.
+- Gmail integration UI exists.
+- Google Calendar integration UI exists.
+- WhatsApp group selection works in demo mode.
+- Memory graph is interactive.
+- Timeline and Time Machine show historical changes.
+- Conflict Center displays evidence.
+- Impact Radar displays dependencies.
+- What-If Simulator clearly identifies hypothetical scenarios.
+- Ask Living Memory has a polished interface.
+- Commitment Tracker works with sample data.
+- Unanswered Question Detector works with sample data.
+- Personal Context Profile exists.
+- Knowledge Transfer screen exists.
+- Privacy controls are visible.
+- Dark and light themes work.
+- Mobile layout works.
+- No broken buttons or blank screens.
+- No fake claims of actual integrations.
+- No TypeScript errors.
+
+**FINAL INSTRUCTION: BUILD THE COMPLETE LIVING MEMORY FRONTEND NOW. DO NOT ASK ME WHAT TO BUILD NEXT. MAKE THE DESIGN DECISIONS YOURSELF AND IMPLEMENT THE ENTIRE APPLICATION.**

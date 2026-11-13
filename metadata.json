@@ -1,0 +1,6 @@
+{
+  "name": "LIVING MEMORY",
+  "description": "Your life, continuously understood. An AI-powered personal context intelligence platform connecting conversations, documents, and commitments into an evolving memory system.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
