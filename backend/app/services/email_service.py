@@ -22,6 +22,58 @@ from app.services.memory_service import MemoryService
 logger = logging.getLogger("living_memory.email_service")
 
 
+def fallback_email_assessment(subject: str, body: str, snippet: str) -> Dict[str, Any]:
+    text = f"{subject or ''}\\n{snippet or ''}\\n{body or ''}".lower()
+
+    urgent_phrases = (
+        "urgent", "immediately", "immediate action", "asap",
+        "action required", "respond today", "reply today",
+        "deadline today", "due today", "by end of day",
+        "time-sensitive", "time sensitive", "final notice",
+    )
+    deadline_phrases = (
+        "deadline", "due by", "due on", "submission date",
+        "submit by", "expires on",
+    )
+    reply_phrases = (
+        "please reply", "please respond", "let me know",
+        "confirm", "reply", "respond",
+    )
+
+    urgent = any(phrase in text for phrase in urgent_phrases)
+    deadline = any(phrase in text for phrase in deadline_phrases)
+    reply = any(phrase in text for phrase in reply_phrases)
+
+    if urgent:
+        score, urgency = 82, "High"
+        action = "Review promptly"
+        reason = "Clear urgency language detected"
+    elif deadline:
+        score, urgency = 72, "Medium"
+        action = "Check the stated deadline"
+        reason = "Deadline-related language detected"
+    elif reply:
+        score, urgency = 65, "Medium"
+        action = "Review and respond"
+        reason = "A response or confirmation may be expected"
+    else:
+        score, urgency = 55, "Low"
+        action = "Review email"
+        reason = "No clear urgency or response language detected"
+
+    return {
+        "importanceScore": score,
+        "importanceCategory": score_to_importance_category(score),
+        "urgency": urgency,
+        "importanceReason": f"Rule-based fallback (Gemini unavailable): {reason}.",
+        "shortSummary": snippet or subject,
+        "actionRequired": action,
+        "requiresReply": reply,
+        "emailCategory": "Important emails",
+        "extractedItems": [],
+    }
+
+
 class EmailService:
     def __init__(self, repo: Repository) -> None:
         self.repo = repo
@@ -120,17 +172,11 @@ class EmailService:
             if detail.get("history_id"):
                 latest_history_id = detail["history_id"]
 
-            analysis_data: Dict[str, Any] = {
-                "importanceScore": 55,
-                "importanceCategory": "Medium",
-                "urgency": "Low",
-                "importanceReason": "Synced via Gmail API (Gemini API key unconfigured for semantic scoring).",
-                "shortSummary": detail.get("snippet") or detail.get("subject"),
-                "actionRequired": "Review email",
-                "requiresReply": False,
-                "emailCategory": "Important emails",
-                "extractedItems": [],
-            }
+            analysis_data: Dict[str, Any] = fallback_email_assessment(
+                subject=detail.get("subject", ""),
+                body=detail.get("body_text", ""),
+                snippet=detail.get("snippet", ""),
+            )
 
             if self.settings.gemini_configured:
                 try:

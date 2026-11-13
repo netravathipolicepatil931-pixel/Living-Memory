@@ -108,121 +108,149 @@ class FileService:
 
         error_message = ""
 
-        if kind == "image":
-            if self.settings.gemini_configured:
-                out = await analyze_image_bytes(content, effective_mime, filename, user_timezone)
-                summary = out.summary
-                ocr_text = out.ocrText
-                structured_details = out.structuredDetails
-                extracted_items = [it.model_dump() for it in out.extractedItems]
-            else:
-                error_message = "Gemini API: Not configured. Image stored locally; configure GEMINI_API_KEY for OCR and AI extraction."
-                summary = f"Stored image '{filename}' locally (Gemini AI OCR not configured)."
+        try:
+            if kind == "image":
+                if self.settings.gemini_configured:
+                    out = await analyze_image_bytes(content, effective_mime, filename, user_timezone)
+                    summary = out.summary
+                    ocr_text = out.ocrText
+                    structured_details = out.structuredDetails
+                    extracted_items = [it.model_dump() for it in out.extractedItems]
+                else:
+                    error_message = "Gemini API: Not configured. Image stored locally; configure GEMINI_API_KEY for OCR and AI extraction."
+                    summary = f"Stored image '{filename}' locally (Gemini AI OCR not configured)."
 
-        elif kind == "audio":
-            transcript_override: Optional[str] = None
-            stt_meta: Dict[str, Any] = {}
-            if self.sarvam.configured:
-                try:
-                    stt_meta = await self.transcription.transcribe_audio(
-                        content, filename, effective_mime, language_hint=language_hint
+            elif kind == "audio":
+                transcript_override: Optional[str] = None
+                stt_meta: Dict[str, Any] = {}
+                if self.sarvam.configured:
+                    try:
+                        stt_meta = await self.transcription.transcribe_audio(
+                            content, filename, effective_mime, language_hint=language_hint
+                        )
+                        transcript_override = stt_meta.get("transcript") or None
+                    except Exception as exc:
+                        logger.info("Sarvam audio STT fallback to Gemini: %s", exc)
+
+                if self.settings.gemini_configured:
+                    out = await analyze_audio_bytes(
+                        content,
+                        effective_mime,
+                        filename,
+                        user_timezone,
+                        transcript_override=transcript_override,
                     )
-                    transcript_override = stt_meta.get("transcript") or None
-                except Exception as exc:
-                    logger.info("Sarvam audio STT fallback to Gemini: %s", exc)
+                    summary = out.summary
+                    transcript = out.transcript or transcript_override or ""
+                    timestamps = [{"time": t.time, "topic": t.label} for t in out.timestamps]
+                    extracted_items = [it.model_dump() for it in out.extractedItems]
+                    if stt_meta.get("provider"):
+                        structured_details["transcriptionProvider"] = stt_meta["provider"]
+                elif transcript_override:
+                    transcript = transcript_override
+                    summary = f"Transcribed via Sarvam {stt_meta.get('model', 'saaras:v3')} (Gemini extraction not configured)."
+                else:
+                    error_message = "Gemini API & Sarvam AI: Not configured. Audio stored locally; configure GEMINI_API_KEY or SARVAM_API_KEY for transcription."
+                    summary = f"Stored audio '{filename}' locally (AI transcription not configured)."
 
-            if self.settings.gemini_configured:
-                out = await analyze_audio_bytes(
-                    content,
-                    effective_mime,
-                    filename,
-                    user_timezone,
-                    transcript_override=transcript_override,
-                )
-                summary = out.summary
-                transcript = out.transcript or transcript_override or ""
-                timestamps = [{"time": t.time, "topic": t.label} for t in out.timestamps]
-                extracted_items = [it.model_dump() for it in out.extractedItems]
-                if stt_meta.get("provider"):
-                    structured_details["transcriptionProvider"] = stt_meta["provider"]
-            elif transcript_override:
-                transcript = transcript_override
-                summary = f"Transcribed via Sarvam {stt_meta.get('model', 'saaras:v3')} (Gemini extraction not configured)."
-            else:
-                error_message = "Gemini API & Sarvam AI: Not configured. Audio stored locally; configure GEMINI_API_KEY or SARVAM_API_KEY for transcription."
-                summary = f"Stored audio '{filename}' locally (AI transcription not configured)."
-
-        elif kind == "video":
-            audio_wav, keyframes = extract_video_audio_and_keyframes(content, ext)
-            transcript_override = None
-            if self.sarvam.configured and audio_wav:
-                try:
-                    stt = await self.sarvam.speech_to_text(
-                        audio_wav, f"{filename}.wav", "audio/wav", language_code=language_hint
+            elif kind == "video":
+                audio_wav, keyframes = extract_video_audio_and_keyframes(content, ext)
+                transcript_override = None
+                if self.sarvam.configured and audio_wav:
+                    try:
+                        stt = await self.sarvam.speech_to_text(
+                            audio_wav, f"{filename}.wav", "audio/wav", language_code=language_hint
+                        )
+                        transcript_override = stt.get("transcript") or None
+                    except Exception:
+                        pass
+                if self.settings.gemini_configured:
+                    out = await analyze_video_bytes(
+                        content,
+                        effective_mime,
+                        filename,
+                        user_timezone,
+                        keyframe_bytes_list=keyframes,
+                        transcript_override=transcript_override,
                     )
-                    transcript_override = stt.get("transcript") or None
-                except Exception:
-                    pass
-            if self.settings.gemini_configured:
-                out = await analyze_video_bytes(
-                    content,
-                    effective_mime,
-                    filename,
-                    user_timezone,
-                    keyframe_bytes_list=keyframes,
-                    transcript_override=transcript_override,
+                    summary = out.summary
+                    transcript = out.transcript
+                    visible_text = [out.visibleText] if out.visibleText else []
+                    timestamps = [{"time": t.time, "topic": t.label} for t in out.timestamps]
+                    extracted_items = [it.model_dump() for it in out.extractedItems]
+                else:
+                    transcript = transcript_override or ""
+                    structured_details = {"extractedKeyframes": str(len(keyframes))}
+                    error_message = "Gemini API: Not configured. Video stored locally; configure GEMINI_API_KEY for multimodal video analysis."
+                    summary = f"Stored video '{filename}' locally ({len(keyframes)} keyframes extracted; Gemini AI not configured)."
+
+            elif kind == "pdf":
+                raw_pdf_text, page_count = extract_pdf_text_with_pages(content)
+                if self.sarvam.configured and not raw_pdf_text.strip():
+                    sarvam_doc = await self.sarvam.parse_document_intelligence(content, filename, effective_mime)
+                    if sarvam_doc and sarvam_doc.get("text"):
+                        raw_pdf_text = sarvam_doc["text"]
+                if self.settings.gemini_configured:
+                    out = await analyze_pdf_bytes(content, filename, raw_pdf_text, user_timezone)
+                    summary = out.summary
+                    ocr_text = raw_pdf_text[:8000]
+                    structured_details = {
+                        "pageCount": str(page_count),
+                        "keyPoints": "; ".join(out.keyPoints[:5]),
+                    }
+                    extracted_items = [it.model_dump() for it in out.extractedItems]
+                else:
+                    ocr_text = raw_pdf_text[:8000]
+                    summary = f"Extracted text from {page_count} PDF pages."
+
+            elif kind == "docx":
+                doc_text = extract_docx_text(content)
+                if self.settings.gemini_configured:
+                    out = await analyze_text_batch(f"DOCX Document: {filename}", doc_text, user_timezone)
+                    summary = out.summary
+                    ocr_text = doc_text[:8000]
+                    extracted_items = [it.model_dump() for it in out.extractedItems]
+                else:
+                    ocr_text = doc_text[:8000]
+                    summary = f"Parsed DOCX document ({len(doc_text)} chars)."
+
+            else:
+                txt = content.decode("utf-8", errors="replace")
+                if self.settings.gemini_configured:
+                    out = await analyze_text_batch(f"Text Document: {filename}", txt, user_timezone)
+                    summary = out.summary
+                    ocr_text = txt[:8000]
+                    extracted_items = [it.model_dump() for it in out.extractedItems]
+                else:
+                    ocr_text = txt[:8000]
+                    summary = f"Loaded text file ({len(txt)} chars)."
+
+        except Exception as exc:
+            detail = str(exc).lower()
+            if any(term in detail for term in ("429", "resource_exhausted", "quota", "rate limit")):
+                error_message = (
+                    "AI analysis is pending because the Gemini API quota has been reached. "
+                    "The original upload is saved."
                 )
-                summary = out.summary
-                transcript = out.transcript
-                visible_text = [out.visibleText] if out.visibleText else []
-                timestamps = [{"time": t.time, "topic": t.label} for t in out.timestamps]
-                extracted_items = [it.model_dump() for it in out.extractedItems]
             else:
-                transcript = transcript_override or ""
-                structured_details = {"extractedKeyframes": str(len(keyframes))}
-                error_message = "Gemini API: Not configured. Video stored locally; configure GEMINI_API_KEY for multimodal video analysis."
-                summary = f"Stored video '{filename}' locally ({len(keyframes)} keyframes extracted; Gemini AI not configured)."
+                error_message = (
+                    "AI analysis could not be completed. The original upload is saved."
+                )
 
-        elif kind == "pdf":
-            raw_pdf_text, page_count = extract_pdf_text_with_pages(content)
-            if self.sarvam.configured and not raw_pdf_text.strip():
-                sarvam_doc = await self.sarvam.parse_document_intelligence(content, filename, effective_mime)
-                if sarvam_doc and sarvam_doc.get("text"):
-                    raw_pdf_text = sarvam_doc["text"]
-            if self.settings.gemini_configured:
-                out = await analyze_pdf_bytes(content, filename, raw_pdf_text, user_timezone)
-                summary = out.summary
-                ocr_text = raw_pdf_text[:8000]
-                structured_details = {
-                    "pageCount": str(page_count),
-                    "keyPoints": "; ".join(out.keyPoints[:5]),
-                }
-                extracted_items = [it.model_dump() for it in out.extractedItems]
-            else:
-                ocr_text = raw_pdf_text[:8000]
-                summary = f"Extracted text from {page_count} PDF pages."
+            if not summary:
+                summary = f"Saved '{filename}'. {error_message}"
 
-        elif kind == "docx":
-            doc_text = extract_docx_text(content)
-            if self.settings.gemini_configured:
-                out = await analyze_text_batch(f"DOCX Document: {filename}", doc_text, user_timezone)
-                summary = out.summary
-                ocr_text = doc_text[:8000]
-                extracted_items = [it.model_dump() for it in out.extractedItems]
-            else:
-                ocr_text = doc_text[:8000]
-                summary = f"Parsed DOCX document ({len(doc_text)} chars)."
+            if not ocr_text:
+                for key in ("raw_pdf_text", "doc_text", "txt"):
+                    value = locals().get(key)
+                    if isinstance(value, str) and value:
+                        ocr_text = value[:8000]
+                        break
 
-        else:
-            txt = content.decode("utf-8", errors="replace")
-            if self.settings.gemini_configured:
-                out = await analyze_text_batch(f"Text Document: {filename}", txt, user_timezone)
-                summary = out.summary
-                ocr_text = txt[:8000]
-                extracted_items = [it.model_dump() for it in out.extractedItems]
-            else:
-                ocr_text = txt[:8000]
-                summary = f"Loaded text file ({len(txt)} chars)."
+            if not transcript:
+                value = locals().get("transcript_override")
+                if isinstance(value, str):
+                    transcript = value
 
         if progress_cb:
             progress_cb("Analyzed", 80, f"Persisting {len(extracted_items)} discoveries into Memory DNA...")
@@ -329,9 +357,38 @@ class FileService:
                 "job_message": msg,
             }
 
-        out = await analyze_text_batch(
-            f"WhatsApp Export ({group_name})", raw_text, user_timezone
-        )
+        try:
+            out = await analyze_text_batch(
+                f"WhatsApp Export ({group_name})", raw_text, user_timezone
+            )
+        except Exception as exc:
+            detail = str(exc).lower()
+            if any(term in detail for term in ("429", "resource_exhausted", "quota", "rate limit")):
+                msg = (
+                    "WhatsApp chat saved. AI analysis is pending because the Gemini API "
+                    "quota has been reached."
+                )
+            else:
+                msg = "WhatsApp chat saved, but AI analysis could not be completed."
+
+            self.repo.update_source(
+                user_id,
+                source_row["id"],
+                {
+                    "processing_status": "Needs attention",
+                    "extracted_memories_count": 0,
+                    "ai_summary": msg,
+                    "ocr_text": raw_text[:8000],
+                    "error_message": msg,
+                },
+            )
+            return {
+                "sourceId": source_row["id"],
+                "summary": msg,
+                "extractedItems": [],
+                "job_status": "Needs attention",
+                "job_message": msg,
+            }
         extracted_items = [it.model_dump() for it in out.extractedItems]
 
         if progress_cb:

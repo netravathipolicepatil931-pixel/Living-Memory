@@ -473,33 +473,27 @@ export const LivingMemoryProvider: React.FC<{ children: React.ReactNode }> = ({ 
   const [syncingGmail, setSyncingGmail] = useState(false);
   const [syncingCalendar, setSyncingCalendar] = useState(false);
 
-  const [memories, setMemories] = useState<Memory[]>(() => enrichInitialMemories(INITIAL_MEMORIES));
-  const [projects] = useState<ProjectItem[]>(INITIAL_PROJECTS);
-  const [entities] = useState<Entity[]>(INITIAL_ENTITIES);
-  const [sources, setSources] = useState<SourceItem[]>(() =>
-    INITIAL_SOURCES.map((s) => ({ ...s, dataOrigin: 'Demo' as const }))
-  );
-  const [groups, setGroups] = useState<WhatsAppGroup[]>(() =>
-    INITIAL_GROUPS.map((g) => ({ ...g, dataOrigin: 'Demo' as const }))
-  );
-  const [groupMessages, setGroupMessages] = useState<GroupMessage[]>(INITIAL_GROUP_MESSAGES);
-  const [gmailItems, setGmailItems] = useState<GmailItem[]>(() => enrichInitialGmail(INITIAL_GMAIL));
-  const [calendarEvents, setCalendarEvents] = useState<CalendarEventItem[]>(() =>
-    INITIAL_CALENDAR_EVENTS.map((c) => ({ ...c, dataOrigin: 'Demo' as const }))
-  );
-  const [deadlines, setDeadlines] = useState<UnifiedDeadline[]>(buildInitialDeadlines);
-  const [commitments, setCommitments] = useState<Commitment[]>(INITIAL_COMMITMENTS);
-  const [questions, setQuestions] = useState<UnansweredQuestion[]>(INITIAL_QUESTIONS);
-  const [decisions] = useState<DecisionRecord[]>(INITIAL_DECISIONS);
-  const [conflicts, setConflicts] = useState<Conflict[]>(INITIAL_CONFLICTS);
-  const [alerts, setAlerts] = useState<ProactiveAlert[]>(INITIAL_ALERTS);
-  const [contextProfile, setContextProfile] = useState<ContextProfileItem[]>(INITIAL_CONTEXT_PROFILE);
-  const [forgottenContext] = useState<ForgottenMemoryItem[]>(INITIAL_FORGOTTEN_CONTEXT);
-  const [impacts] = useState<ImpactScenario[]>(INITIAL_IMPACTS);
-  const [predictions] = useState<LifePredictionItem[]>(INITIAL_PREDICTIONS);
-  const [crossGroups] = useState<CrossGroupThread[]>(INITIAL_CROSS_GROUPS);
+  const [memories, setMemories] = useState<Memory[]>([]);
+  const [projects] = useState<ProjectItem[]>([]);
+  const [entities] = useState<Entity[]>([]);
+  const [sources, setSources] = useState<SourceItem[]>([]);
+  const [groups, setGroups] = useState<WhatsAppGroup[]>([]);
+  const [groupMessages, setGroupMessages] = useState<GroupMessage[]>([]);
+  const [gmailItems, setGmailItems] = useState<GmailItem[]>([]);
+  const [calendarEvents, setCalendarEvents] = useState<CalendarEventItem[]>([]);
+  const [deadlines, setDeadlines] = useState<UnifiedDeadline[]>([]);
+  const [commitments, setCommitments] = useState<Commitment[]>([]);
+  const [questions, setQuestions] = useState<UnansweredQuestion[]>([]);
+  const [decisions] = useState<DecisionRecord[]>([]);
+  const [conflicts, setConflicts] = useState<Conflict[]>([]);
+  const [alerts, setAlerts] = useState<ProactiveAlert[]>([]);
+  const [contextProfile, setContextProfile] = useState<ContextProfileItem[]>([]);
+  const [forgottenContext] = useState<ForgottenMemoryItem[]>([]);
+  const [impacts] = useState<ImpactScenario[]>([]);
+  const [predictions] = useState<LifePredictionItem[]>([]);
+  const [crossGroups] = useState<CrossGroupThread[]>([]);
   const [integrations, setIntegrations] = useState<IntegrationState[]>(INITIAL_INTEGRATIONS);
-  const [notifications, setNotifications] = useState<NotificationItem[]>(INITIAL_NOTIFICATIONS);
+  const [notifications, setNotifications] = useState<NotificationItem[]>([]);
 
   const [settings, setSettings] = useState<AppSettings>(() => {
     try {
@@ -553,42 +547,12 @@ export const LivingMemoryProvider: React.FC<{ children: React.ReactNode }> = ({ 
         );
       }
 
-      if (snap.memories.length > 0) {
-        setMemories((prev) => {
-          const liveIds = new Set(snap.memories.map((m) => m.id));
-          return [...snap.memories, ...prev.filter((m) => m.dataOrigin !== 'Live' && !liveIds.has(m.id))];
-        });
-      }
-      if (snap.sources.length > 0) {
-        setSources((prev) => {
-          const liveIds = new Set(snap.sources.map((s) => s.id));
-          return [...snap.sources, ...prev.filter((s) => s.dataOrigin !== 'Live' && !liveIds.has(s.id))];
-        });
-      }
-      if (snap.deadlines.length > 0) {
-        setDeadlines((prev) => {
-          const liveIds = new Set(snap.deadlines.map((d) => d.id));
-          return [...snap.deadlines, ...prev.filter((d) => d.dataOrigin !== 'Live' && !liveIds.has(d.id))];
-        });
-      }
-      if (snap.emails.length > 0) {
-        setGmailItems((prev) => {
-          const liveMsgIds = new Set(snap.emails.map((e) => e.gmailMessageId));
-          return [...snap.emails, ...prev.filter((e) => e.dataOrigin !== 'Live' && !liveMsgIds.has(e.gmailMessageId))];
-        });
-      }
-      if (snap.conflicts.length > 0) {
-        setConflicts((prev) => {
-          const ids = new Set(snap.conflicts.map((c) => c.id));
-          return [...snap.conflicts, ...prev.filter((c) => !ids.has(c.id))];
-        });
-      }
-      if (snap.notifications.length > 0) {
-        setNotifications((prev) => {
-          const ids = new Set(snap.notifications.map((n) => n.id));
-          return [...snap.notifications, ...prev.filter((n) => !ids.has(n.id))];
-        });
-      }
+      setMemories(snap.memories);
+      setSources(snap.sources);
+      setDeadlines(snap.deadlines);
+      setGmailItems(snap.emails);
+      setConflicts(snap.conflicts);
+      setNotifications(snap.notifications);
     } catch {
       // keep existing state cleanly if backend temporarily offline
     }
