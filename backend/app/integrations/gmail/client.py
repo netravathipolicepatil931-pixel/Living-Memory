@@ -106,7 +106,7 @@ async def fetch_gmail_profile(access_token: str) -> Dict[str, Any]:
 async def list_gmail_message_ids_paginated(
     access_token: str,
     *,
-    max_messages: int = 25,
+    max_messages: int = 500,
     after_date: Optional[str] = None,
     before_date: Optional[str] = None,
 ) -> List[str]:

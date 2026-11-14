@@ -27,7 +27,7 @@ class ProfileUpdateRequest(BaseModel):
 
 
 class GmailSyncRequest(BaseModel):
-    maxMessages: int = Field(default=20, ge=1, le=100)
+    maxMessages: int = Field(default=500, ge=1, le=500)
     afterDate: Optional[str] = None
     beforeDate: Optional[str] = None
     userTimezone: str = "UTC"

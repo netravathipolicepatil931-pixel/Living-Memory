@@ -84,7 +84,7 @@ class EmailService:
         self,
         user_id: str,
         *,
-        max_messages: int = 20,
+        max_messages: int = 500,
         after_date: Optional[str] = None,
         before_date: Optional[str] = None,
         user_timezone: str = "UTC",

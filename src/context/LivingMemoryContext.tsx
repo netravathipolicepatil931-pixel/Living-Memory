@@ -852,7 +852,7 @@ export const LivingMemoryProvider: React.FC<{ children: React.ReactNode }> = ({ 
         .filter((id): id is string => Boolean(id));
 
       const jobId = await startGmailSyncJob({
-        maxMessages: options?.maxMessages ?? 20,
+        maxMessages: options?.maxMessages ?? 500,
         afterDate: options?.afterDate ?? (settings.gmailAfterDate || undefined),
         beforeDate: options?.beforeDate ?? (settings.gmailBeforeDate || undefined),
         startHistoryId: settings.gmailHistoryId,

@@ -35,3 +35,8 @@ backend/data/
 *.db
 *.sqlite
 *.sqlite3
+
+# Temporary backup files
+*backup*
+*.backup
+
